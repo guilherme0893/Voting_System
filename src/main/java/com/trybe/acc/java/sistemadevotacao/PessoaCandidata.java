@@ -6,17 +6,17 @@ package com.trybe.acc.java.sistemadevotacao;
 
 public class PessoaCandidata extends  Pessoa {
 
-  private int number;
-  private int votes;
+  private int numero;
+  private int votos;
 
   /**
    * Class PessoaCandidata.
    */
-  public PessoaCandidata(String nome, int number) {
+  public PessoaCandidata(String nome, int numero) {
     super(nome);
 
-    this.number = number;
-    this.votes = 0; // start
+    this.numero = numero;
+    this.votos = 0; // start
   }
 
   @Override
@@ -29,23 +29,23 @@ public class PessoaCandidata extends  Pessoa {
     super.nome = nome;
   }
 
-  public int getNumber() {
-    return number;
+  public int getNumero() {
+    return numero;
   }
 
-  public void setNumber(int number) {
-    this.number = number;
+  public void setNumero(int numero) {
+    this.numero = numero;
   }
 
-  public int getVotes() {
-    return votes;
+  public int getVotos() {
+    return votos;
   }
 
-  public void setVotes(int votes) {
-    this.votes = votes;
+  public void setVotos(int votos) {
+    this.votos = votos;
   }
 
-  public void receiveVotes() {
-    this.votes += 1;
+  public void receberVoto() {
+    this.votos += 1;
   }
 }
