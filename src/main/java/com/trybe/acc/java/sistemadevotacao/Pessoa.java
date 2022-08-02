@@ -6,18 +6,18 @@ package com.trybe.acc.java.sistemadevotacao;
 
 public abstract class Pessoa {
 
-  protected String name;
+  protected String nome;
 
 
-  public Pessoa(String name) {
-    this.name = name;
+  public Pessoa(String nome) {
+    this.nome = nome;
   }
 
-  public String getName() {
-    return name;
+  public String getNome() {
+    return nome;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setNome(String nome) {
+    this.nome = nome;
   }
 }

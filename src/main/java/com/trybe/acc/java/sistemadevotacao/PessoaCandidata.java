@@ -12,21 +12,21 @@ public class PessoaCandidata extends  Pessoa {
   /**
    * Class PessoaCandidata.
    */
-  public PessoaCandidata(String name, int number) {
-    super(name);
+  public PessoaCandidata(String nome, int number) {
+    super(nome);
 
     this.number = number;
     this.votes = 0; // start
   }
 
   @Override
-  public  String getName() {
-    return super.name;
+  public  String getNome() {
+    return super.nome;
   }
 
   @Override
-  public void setName(String name) {
-    super.name = name;
+  public void setNome(String nome) {
+    super.nome = nome;
   }
 
   public int getNumber() {
