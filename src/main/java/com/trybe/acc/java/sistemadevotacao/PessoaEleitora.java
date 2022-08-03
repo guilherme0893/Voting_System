@@ -12,20 +12,19 @@ public class PessoaEleitora extends  Pessoa {
    * Class PessoaCandidata.
    */
 
-  public PessoaEleitora(String cpf, String nome) {
+  public PessoaEleitora(String nome, String cpf) {
     super(nome);
-
     this.cpf = cpf;
   }
 
   @Override
   public String getNome() {
-    return super.nome;
+    return this.nome;
   }
 
   @Override
   public void setNome(String nome) {
-    super.nome = nome;
+    this.nome = nome;
   }
 
   public String getCpf() {

@@ -7,26 +7,24 @@ package com.trybe.acc.java.sistemadevotacao;
 public class PessoaCandidata extends  Pessoa {
 
   private int numero;
-  private int votos;
+  private int votos = 0;
 
   /**
    * Class PessoaCandidata.
    */
   public PessoaCandidata(String nome, int numero) {
     super(nome);
-
     this.numero = numero;
-    this.votos = 0; // start
   }
 
   @Override
-  public  String getNome() {
-    return super.nome;
+  public String getNome() {
+    return this.nome;
   }
 
   @Override
   public void setNome(String nome) {
-    super.nome = nome;
+    this.nome = nome;
   }
 
   public int getNumero() {

@@ -1,57 +1,44 @@
 package com.trybe.acc.java.sistemadevotacao;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * GerenciamentoVotacao.
  **/
 
 public class GerenciamentoVotacao {
-
-  private void log(String str) {
-    System.out.println(str);
-  }
-
-  private final ArrayList<PessoaCandidata> pessoasCandidatas = new ArrayList<>();
-  private final ArrayList<PessoaEleitora> pessoasEleitoras = new ArrayList<>();
-  private final ArrayList<String> cpfComputado = new ArrayList<>();
-  public int totalVotos = 0;
-
-  private boolean numeroCandidatoJaCadastrado(int numero) {
-    return pessoasCandidatas.stream().anyMatch(candidato -> candidato.getNumero() == numero);
-  }
-
-  private boolean eleitorJaCadastrado(String cpf) {
-    return pessoasEleitoras.stream().anyMatch(eleitor -> eleitor.getCpf().equals(cpf));
-  }
+  private final ArrayList<PessoaCandidata> pessoasCandidatas = new ArrayList<PessoaCandidata>();
+  private final ArrayList<PessoaEleitora> pessoasEleitoras = new ArrayList<PessoaEleitora>();
+  private final ArrayList<String> cpfComputado = new ArrayList<String>();
+  public int totalVotos;
 
   /**
    * Cadastrar pessoa candidata.
    **/
   public void cadastrarPessoaCandidata(String nome, int numero) {
-    if (numeroCandidatoJaCadastrado(numero)) {
-      log("Número pessoa candidata já utilizado!");
-    } else {
-      pessoasCandidatas.add(new PessoaCandidata(nome, numero));
+    for (int i = 0; i < this.pessoasCandidatas.size(); i += 1) {
+      if (this.pessoasCandidatas.get(i).getNumero() == numero) {
+        System.out.println("Número pessoa candidata já utilizado!");
+        break;
+      }
     }
+
+    this.pessoasCandidatas.add(new PessoaCandidata(nome, numero));
   }
 
   /**
-   * Cadastrar pessoa eleitora.
+   * Cadastrar pessoa candidata.
    **/
   public void cadastrarPessoaEleitora(String nome, String cpf) {
-    if (eleitorJaCadastrado(cpf)) {
-      log("Pessoa eleitora já cadastrada!");
-    } else {
-      pessoasEleitoras.add(new PessoaEleitora(nome, cpf));
+    for (int i = 0; i < pessoasEleitoras.size(); i += 1) {
+      if (pessoasEleitoras.get(i).getCpf().equals(cpf)) {
+        System.out.println("Pessoa eleitora já cadastrada!");
+        break;
+      }
     }
-  }
 
-  private PessoaCandidata getCandidatoPorNumero(int numeroPessoaCandidata) {
-    return pessoasCandidatas.stream()
-            .filter(candidato -> candidato.getNumero() == numeroPessoaCandidata)
-            .findFirst()
-            .orElse(null);
+    pessoasEleitoras.add(new PessoaEleitora(nome, cpf));
   }
 
   /**
@@ -59,38 +46,41 @@ public class GerenciamentoVotacao {
    **/
   public void votar(String cpfPessoaEleitora, int numeroPessoaCandidata) {
     if (cpfComputado.contains(cpfPessoaEleitora)) {
-      log("Pessoa eleitora já votou!");
-    } else {
-      PessoaCandidata candidatoVotado = getCandidatoPorNumero(numeroPessoaCandidata);
-      candidatoVotado.receberVoto();
-      cpfComputado.add(cpfPessoaEleitora);
-      totalVotos += 1;
+      System.out.println("Pessoa eleitora já votou!");
+      return;
     }
-  }
-
-  private double calcularPorcentagemVotos(int indexCandidato) {
-    int votosCandidato = pessoasCandidatas.get(indexCandidato).getVotos();
-    return (((double) votosCandidato / totalVotos) * 100);
+    for (int i = 0; i < this.pessoasCandidatas.size(); i += 1) {
+      if (this.pessoasCandidatas.get(i).getNumero() == numeroPessoaCandidata) {
+        this.pessoasCandidatas.get(i).receberVoto();
+        cpfComputado.add(cpfPessoaEleitora);
+        this.totalVotos += 1;
+      }
+    }
   }
 
   /**
    * Mostrar resultado.
    **/
   public void mostrarResultado() {
-
-    if (totalVotos < 1) {
-      log("É preciso ter pelo menos um voto para mostrar o resultado.");
-    } else {
-      for (PessoaCandidata candidato : pessoasCandidatas) {
-        System.out.printf("Nome: %s - %d votos (%f%%)%n",
-                candidato.getNome(),
-                candidato.getVotos(),
-                calcularPorcentagemVotos(pessoasCandidatas.indexOf(candidato)));
-
-      }
-
-      System.out.printf("Total de votos: %d%n", totalVotos);
+    if (this.totalVotos == 0) {
+      System.out.println("É preciso ter pelo menos um voto para mostrar o resultado.");
     }
+    for (int i = 0; i < this.pessoasCandidatas.size(); i += 1) {
+      System.out.println("Nome: "
+              + this.pessoasCandidatas.get(i).getNome()
+              + " - "
+              + this.pessoasCandidatas.get(i).getVotos()
+              + " votos  ( "
+              + Math.round(this.calcularPorcentagemVotos(i) * 100)
+              + "% )");
+    }
+    System.out.println("Total de votos: " + this.totalVotos);
+  }
 
+  /**
+   * calcular %.
+   **/
+  private double calcularPorcentagemVotos(int index) {
+    return (double) pessoasCandidatas.get(index).getVotos() / this.totalVotos;
   }
 }
